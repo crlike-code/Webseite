@@ -1,0 +1,206 @@
+.kalender {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Flexible Spaltenanzahl */
+  grid-gap: 20px;
+  max-width: 100%; /* Maximalbreite anpassen */
+  margin: 50px auto;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tuerchen {
+  background: url('open.webp');
+  background-size: cover;
+  border: 2px solid #ffffff;
+  color: #333;
+  position: relative;
+  padding: 200px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  /* Anpassung der Span-Größen entfernt, da diese durch Grid-Layout kontrolliert werden */
+  transition: transform 0.2s;
+}
+
+
+
+/* Fügen Sie diese Klasse direkt nach .tuerchen ein */
+.tuerchen.open {
+  background: rgba(255, 255, 255, 0) url('page.png'); /* Hintergrundfarbe mit Transparenz */
+  background-size: cover;
+  /* ... zusätzliche Stile für geöffnete Türchen ... */
+}
+
+.tuerchen:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tuerchen.locked {
+  background: url('closed.webp'); /* Pfad zu einem anderen Muster oder Bild */
+  background-size: cover;
+  border: 2px solid #ffffff;
+  color: #333;
+  position: relative;
+  padding: 200px;
+  text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
+  /* Anpassung der Span-Größen entfernt, da diese durch Grid-Layout kontrolliert werden */
+  transition: transform 0.2s;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.tuerchen:before {
+  content: attr(data-day);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #c0392b;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.riddle {
+  display: none;
+  margin-top: 80px;
+}
+
+.correct, .wrong {
+  display: none;
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.correct {
+  color: #27ae60;
+}
+
+.wrong {
+  color: #c0392b;
+}
+
+/* Extra Dekorationen */
+.kalender:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 20px;
+  background: url('schneeflocken.png'); /* Pfad zu einem Bild mit Schneeflocken */
+  background-size: contain;
+}
+
+/* Vorhandene CSS-Regeln ... */
+
+.tuerchen.open .riddle,
+.tuerchen.open .feedback,
+.tuerchen.open .loesung-input,
+.tuerchen.open button {
+  display: block;
+}
+
+/* Positionierung des Rätsels (riddle) an der Spitze innerhalb des Türchens */
+.tuerchen .riddle {
+  position: absolute;
+  top: 50px; /* Abstand vom oberen Rand des Türchens */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(80% - 40px); /* 20px padding on each side */
+}
+
+/* Positionierung des Eingabefelds (loesung-input) direkt unter dem Rätsel */
+.tuerchen .loesung-input {
+  position: absolute;
+  top: 300px; /* Abstand vom oberen Rand des Türchens, unterhalb des Rätsels */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(90% - 120px);
+}
+
+/* Positionierung des Überprüfen-Buttons unter dem Eingabefeld */
+.tuerchen button {
+  position: absolute;
+  top: 325px; /* Abstand vom oberen Rand des Türchens, unterhalb des Eingabefelds */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(50% - 40px);
+}
+
+/* Positionierung des Feedback-Elements unter dem Button */
+.tuerchen .feedback {
+  position: absolute;
+  top: 10px; /* Abstand vom oberen Rand des Türchens, unterhalb des Buttons */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+}
+
+/* Modal-Fenster-Stile */
+.modal {
+  display: none; /* Versteckt das Modal-Fenster standardmäßig */
+  position: fixed; /* Bleibt an der gleichen Stelle, auch beim Scrollen */
+  z-index: 1; /* Liegt über allen anderen Elementen */
+  left: 0;
+  top: 0;
+  width: 100%; /* Volle Breite */
+  height: 100%; /* Volle Höhe */
+  overflow: auto; /* Bei Bedarf Scrollbar hinzufügen */
+  background-color: rgba(0,0,0,0.4); /* Schwarze Hintergrundfarbe mit Transparenz */
+}
+
+/* Modal-Inhalt */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% vom oberen Rand und zentriert horizontal */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Breite des Inhalts */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+
+/* Animation für das Modal (optional) */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+/* Schließbutton */
+#closeModal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#closeModal:hover,
+#closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Media Queries für verschiedene Bildschirmgrößen */
+@media (max-width: 768px) {
+  .tuerchen {
+    /* Anpassungen für kleinere Bildschirme */
+  }
+}
+
+@media (max-width: 480px) {
+  .tuerchen {
+    /* Anpassungen für sehr kleine Bildschirme */
+  }
+}

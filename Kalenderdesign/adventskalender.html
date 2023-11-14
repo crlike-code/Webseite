@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Adventskalender</title>
+  <link rel="stylesheet" href="adventskalender.css">
+  <style>
+    .riddle {
+      font-family: Arial, sans-serif; /* Ändern Sie die Schriftart nach Bedarf */
+      color: black; /* Schriftfarbe auf Schwarz setzen */
+      font-size: 18px; /* Schriftgröße auf 16 Pixel setzen oder eine andere Größe Ihrer Wahl verwenden */
+      text-align: justify; /* Text im Blocksatz darstellen */
+    }
+  </style>
+  
+  <script src="adventskalender.js" defer></script>
+</head>
+<body>
+  <div class="kalender"></div>
+  <!-- Feedback-Fenster (versteckt, bis es benötigt wird) -->
+  <div id="feedbackModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-feedback-text"></span>
+      <button id="closeModal">Okay</button>
+    </div>
+  </div>
+
+  <!-- Das Skript wird durch das "defer" im <head> nach dem Laden des Dokuments ausgeführt. -->
+</body>
+</html>
