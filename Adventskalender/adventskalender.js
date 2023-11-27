@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tuerchen.className = 'tuerchen';
     tuerchen.setAttribute('data-day', i);
     
-    const unlockDate = new Date(2023, 9, i); // Dezember ist Monat 11 (0-basiert in JavaScript)
+    const unlockDate = new Date(2023, 11, i); // Dezember ist Monat 11 (0-basiert in JavaScript)
     if (currentDate >= unlockDate && raetsel[i - 1]) {
       tuerchen.addEventListener('click', () => openDoor(tuerchen, raetsel[i - 1]));
     } else {
