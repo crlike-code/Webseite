@@ -159,48 +159,44 @@
   background-color: rgba(0,0,0,0.4); /* Schwarze Hintergrundfarbe mit Transparenz */
 }
 
-/* Modal-Inhalt */
+/* Modal-Inhalt mit Flexbox für dynamische Anordnung */
 .modal-content {
+  display: flex; /* Flex-Container */
+  justify-content: space-between; /* Elemente links und rechts anordnen */
+  align-items: center; /* Vertikale Zentrierung */
   background-color: #fefefe;
-  margin: 15% auto; /* 15% vom oberen Rand und zentriert horizontal */
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Breite des Inhalts */
+  width: 80%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   animation-name: animatetop;
   animation-duration: 0.4s;
 }
 
-/* Animation für das Modal (optional) */
-@keyframes animatetop {
-  from {top: -300px; opacity: 0}
-  to {top: 0; opacity: 1}
+/* Stil für den Text innerhalb des Modal-Inhalts */
+.modal-content .text {
+  text-align: left; /* Text linksbündig */
+  flex-grow: 1; /* Nimmt verfügbaren Platz ein */
 }
 
-/* Schließbutton */
+/* Stil-Anpassung für den Schließbutton */
 #closeModal {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+  margin-left: 20px; /* Abstand zum Text */
+  font-size: 15px; /* Erhöhen der Schriftgröße */
+  padding: 10px 20px;
+  /* ... restliche Stile unverändert ... */
 }
 
-#closeModal:hover,
-#closeModal:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Media Queries für verschiedene Bildschirmgrößen */
+/* Media Queries für Anpassungen bei verschiedenen Bildschirmgrößen */
 @media (max-width: 768px) {
-  .tuerchen {
-    /* Anpassungen für kleinere Bildschirme */
+  .modal-content {
+    flex-direction: column; /* Elemente übereinander bei kleineren Bildschirmen */
+    align-items: flex-start; /* Ausrichtung am Anfang */
   }
-}
 
-@media (max-width: 480px) {
-  .tuerchen {
-    /* Anpassungen für sehr kleine Bildschirme */
+  #closeModal {
+    margin-top: 20px;
+    margin-left: 0;
   }
 }

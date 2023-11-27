@@ -13,9 +13,9 @@ header h1 {
 
 nav .dropdown {
   position: absolute;
-  left: 5%; /* Zentrieren Sie horizontal */
-  top: 5%;
-  transform: translateX(-50%); /* Zentrieren Sie horizontal */
+  left: 10px; /* Links leicht weg vom Rand, statt Prozentangabe */
+  top: 10px; /* Gleicher Abstand zum oberen Rand */
+  /* transform entfernt, da nicht mehr benötigt */
 }
 
 nav .dropbtn {
@@ -65,9 +65,9 @@ nav .dropdown:hover .dropbtn {
 }
 
 .info-box {
-  margin: 30px auto;
-  padding: 20px;
-  max-width: 600px;
+  margin: 100px auto; /* Zentriert die Box horizontal */
+  padding: 50px;
+  max-width: 800px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
 }
