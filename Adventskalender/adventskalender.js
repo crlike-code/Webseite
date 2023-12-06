@@ -3,16 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentDate = new Date();
 
   const raetsel = [
-    { frage: "Ein unsichtbarer Dirigent, der die Welt in seinem Rhythmus tanzen lässt, spürbar, doch ungreifbar. Was könnte es sein? ", loesung: "Gravitation" },
-    { frage: "Vier rollen um die Wette, wer wird wohl am schnellsten sein? Doch so gern ich es auch hätte, niemand kann der Sieger sein", loesung: "Wagenrad" },
-    { frage: "Kaltes mach ich warm, heißes mach ich kalt; reich hat mich und arm, wer lang mich hat, wird alt", loesung: "Atem" },
-    { frage: "Immer ist es nah, niemals ist es da. Wenn du denkst, du sei’st daran, nimmt es andern Namen an", loesung: "Morgen" },
-    { frage: "Muss Tag und Nacht auf Wache stehen, hat keine Füße und muss doch gehen, hat keine Hände und muss doch schlagen. Wer kann mir dieses Rätsel sagen?", loesung: "Uhr" },
-    { frage: "Ich bin ein kleines zittrig Ding auf unbequemem Sitze, doch geb ich manchen guten Wink mit meiner Nasenspitze. Was kann das sein?", loesung: "Kompassnadel" },
-    { frage: "Wer es macht, der sagt es nicht. Wer es sagt, der macht es nicht. Wer es nimmt, der kennt es nicht. Wer es kennt, der nimmt es nicht.", loesung: "Falschgeld" },
-    { frage: "Erst weiß wie Schnee, dann grün wie Klee, dann rot wie Blut. Schmeckt allen gut.", loesung: "Kirsche" },
-    { frage: "In Zeitungen mag leicht es jeder missen, gebraten aber ist’s ein Leckerbissen.", loesung: "Ente" },
-    { frage: "Ein schlafender Bote aus einer anderen Welt, der in Stille spricht und nur in Träumen gehört werden kann. Was ist es?", loesung: "Unterbewusstsein" },
+    { frage: "Ein unsichtbarer Dirigent, der die Welt in seinem Rhythmus tanzen lässt, spürbar, doch ungreifbar. Was könnte es sein? ", loesung: "Gravitation",hinweis:"Grundkraft der Physik" },
+    { frage: "Vier rollen um die Wette, wer wird wohl am schnellsten sein? Doch so gern ich es auch hätte, niemand kann der Sieger sein", loesung: "Wagenrad",hinweis:"Alter Begriff (Einzahl)"  },
+    { frage: "Kaltes mach ich warm, heißes mach ich kalt; reich hat mich und arm, wer lang mich hat, wird alt", loesung: "Atem",hinweis:"man kann ihn anhalten"  },
+    { frage: "Immer ist es nah, niemals ist es da. Wenn du denkst, du sei’st daran, nimmt es andern Namen an", loesung: "Morgen",hinweis:"eine nahe, aber noch nicht eingetretene Zeit (Begriff beschreibt einen zukünftigen Zeitpunkt)"  },
+    { frage: "Muss Tag und Nacht auf Wache stehen, hat keine Füße und muss doch gehen, hat keine Hände und muss doch schlagen. Wer kann mir dieses Rätsel sagen?", loesung: "Uhr",hinweis:"Manchmal ein Gegenstand manchmal digital"  },
+    { frage: "Ich bin ein kleines zittrig Ding auf unbequemem Sitze, doch geb ich manchen guten Wink mit meiner Nasenspitze. Was kann das sein?", loesung: "Kompassnadel",hinweis:"Nicht der Gegenstand an sich sondern das was (zittrig) mittig darauf sitzt"  },
+    { frage: "Wer es macht, der sagt es nicht. Wer es sagt, der macht es nicht. Wer es nimmt, der kennt es nicht. Wer es kennt, der nimmt es nicht.", loesung: "Falschgeld",hinweis:"In einer Bankfiliale würde es auffallen"  },
+    { frage: "Erst weiß wie Schnee, dann grün wie Klee, dann rot wie Blut. Schmeckt allen gut.", loesung: "Kirsche" ,hinweis:"klein und fruchtig" },
+    { frage: "In Zeitungen mag leicht es jeder missen, gebraten aber ist’s ein Leckerbissen.", loesung: "Ente" ,hinweis:"Alter Begriff für Fakenews" },
+    { frage: "Ein schlafender Bote aus einer anderen Welt, der in Stille spricht und nur in Träumen gehört werden kann. Was ist es?", loesung: "Unterbewusstsein",hinweis:"Ein Teil des Geistes, der nicht im direkten Fokus des bewussten Denkens ist" },
     { frage: "Du bewegst dich hurtig fort und gelangst doch kaum vom Ort. Wer trägt dich in solcher Weise auf der leicht beschwingten Reise?", loesung: "Schaukel" },
     { frage: "Je mehr es bekommt, desto hungriger wird es – hat es alles gefressen, so stirbt es.", loesung: "Feuer" },
     { frage: "Je mehr man davon isst, desto mehr bleibt übrig.", loesung: "Nüsse" },
@@ -54,17 +54,52 @@ document.addEventListener("DOMContentLoaded", () => {
 function openDoor(tuerchen, raetsel) {
   if (!tuerchen.classList.contains('open') && raetsel) {
     tuerchen.classList.add('open');
-    tuerchen.innerHTML += ` <!-- Verwenden Sie +=, um den Inhalt anzuhängen, ohne bestehende Inhalte zu überschreiben -->
+
+    // Erstellt das Layout für das Rätsel
+    tuerchen.innerHTML = `
       <div class="riddle">${raetsel.frage}</div>
       <input type="text" class="loesung-input" placeholder="Deine Antwort...">
-      <button>Überprüfen</button>
+      <button class="check-answer">Überprüfen</button>
+      <button class="hint-button">Hinweis</button>
       <div class="feedback"></div>
     `;
+
     tuerchen.setAttribute('data-loesung', raetsel.loesung);
-    const button = tuerchen.querySelector('button');
-    button.addEventListener('click', () => checkAnswer(tuerchen));
+
+    const checkAnswerButton = tuerchen.querySelector('.check-answer');
+    const input = tuerchen.querySelector('.loesung-input');
+    const hintButton = tuerchen.querySelector('.hint-button');
+    const hintModal = document.getElementById('hintModal');
+    const hintModalText = document.querySelector('.modal-hint-text');
+    const closeHintModalButton = document.getElementById('closeHintModal');
+
+    // Event Listener für das Drücken der Enter-Taste
+    input.addEventListener('keypress', function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        checkAnswerButton.click();
+      }
+    });
+
+    // Event Listener für den Überprüfen-Button
+    checkAnswerButton.addEventListener('click', () => checkAnswer(tuerchen));
+
+    // Event Listener für den Hinweis-Button
+    hintButton.addEventListener('click', () => {
+      hintModalText.textContent = raetsel.hinweis; // Setzt den Hinweistext
+      hintModal.style.display = 'block'; // Zeigt das Hinweis-Modal an
+    });
+
+    // Event Listener für den Schließen-Button im Hinweis-Modal
+    closeHintModalButton.addEventListener('click', () => {
+      hintModal.style.display = 'none'; // Schließt das Hinweis-Modal
+    });
   }
 }
+
+// Stellen Sie sicher, dass die Funktion checkAnswer und alle relevanten Modals im HTML vorhanden sind
+
+
 
 function checkAnswer(tuerchen) {
   const input = tuerchen.querySelector('.loesung-input');
@@ -86,15 +121,19 @@ function checkAnswer(tuerchen) {
   } else {
     feedbackText.textContent = 'Versuche es erneut.';
   }
-  
+
   // Zeigt das Modal-Fenster
   feedbackModal.style.display = "block";
+
+  // Schließt das Modal, wenn die Enter-Taste gedrückt wird
+  window.addEventListener('keydown', function(event) {
+    if (event.keyCode === 13 && feedbackModal.style.display === "block") {
+      feedbackModal.style.display = "none";
+    }
+  });
 }
 
-// Schließt das Modal-Fenster
-document.getElementById('closeModal').onclick = function() {
-  document.getElementById('feedbackModal').style.display = "none";
-}
+
 
 // Schließt das Modal, wenn außerhalb des Inhalts geklickt wird
 window.onclick = function(event) {
@@ -102,6 +141,23 @@ window.onclick = function(event) {
   if (event.target == feedbackModal) {
     feedbackModal.style.display = "none";
   }
-}
+};
+
+// Schließt das Modal, wenn die Enter-Taste gedrückt wird
+window.addEventListener('keydown', function(event) {
+  const feedbackModal = document.getElementById('feedbackModal');
+  if (event.keyCode === 13 && feedbackModal.style.display === "block") {
+    feedbackModal.style.display = "none";
+  }
+});
+
+
+
+  // Event Listener für den "Okay"-Button im Feedback-Fenster
+  document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('feedbackModal').style.display = 'none';
+  });
+
+
 
 

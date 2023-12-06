@@ -113,38 +113,63 @@
 /* Positionierung des Rätsels (riddle) an der Spitze innerhalb des Türchens */
 .tuerchen .riddle {
   position: absolute;
-  top: 50px; /* Abstand vom oberen Rand des Türchens */
+  top: 62px; /* Abstand vom oberen Rand des Türchens */
   left: 50%;
   transform: translateX(-50%);
   width: calc(80% - 40px); /* 20px padding on each side */
 }
 
+/* ... Vorherige CSS-Regeln ... */
+
 /* Positionierung des Eingabefelds (loesung-input) direkt unter dem Rätsel */
 .tuerchen .loesung-input {
   position: absolute;
-  top: 300px; /* Abstand vom oberen Rand des Türchens, unterhalb des Rätsels */
+  top: 290px; /* Abstand vom oberen Rand des Türchens, unterhalb des Rätsels */
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 120px);
 }
 
 /* Positionierung des Überprüfen-Buttons unter dem Eingabefeld */
-.tuerchen button {
+.tuerchen .check-answer {
   position: absolute;
-  top: 325px; /* Abstand vom oberen Rand des Türchens, unterhalb des Eingabefelds */
+  top: 315px; /* Erhöhen des Abstandes für Platzierung des Buttons */
   left: 50%;
   transform: translateX(-50%);
   width: calc(50% - 40px);
 }
 
-/* Positionierung des Feedback-Elements unter dem Button */
+/* Positionierung des Hinweis-Buttons unter dem Überprüfen-Button */
+.tuerchen .hint-button {
+  position: absolute;
+  top: 340px; /* Weiterer Abstand vom oberen Rand, unter dem Überprüfen-Button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(50% - 100px);
+}
+
+/* Positionierung des Hinweis-Textes unter dem Hinweis-Button */
+.tuerchen .hint {
+  position: absolute;
+  top: 450px; /* Positionierung unter dem Hinweis-Button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(90% - 40px);
+  display: none; /* Standardmäßig versteckt */
+}
+
+/* Positionierung des Feedback-Elements unter dem Hinweis-Text */
 .tuerchen .feedback {
   position: absolute;
-  top: 10px; /* Abstand vom oberen Rand des Türchens, unterhalb des Buttons */
+  top: 500px; /* Abstand vom oberen Rand des Türchens, unterhalb des Hinweis-Textes */
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 40px);
+  display: none;
 }
+
+/* ... Weitere CSS-Regeln ... */
+
 
 /* Modal-Fenster-Stile */
 .modal {
@@ -200,3 +225,15 @@
     margin-left: 0;
   }
 }
+
+.word-length-indicators {
+  display: flex; /* Flex-Container für horizontale Anordnung */
+  justify-content: center; /* Zentriert die Striche horizontal */
+  margin-top: 50px; /* Abstand von der Rätselfrage */
+}
+
+.letter-indicator {
+  margin-right: 10px; /* Abstand zwischen den Strichen */
+  font-size: 30px; /* Große Schriftgröße für bessere Sichtbarkeit */
+}
+
