@@ -233,7 +233,7 @@
 }
 
 .letter-indicator {
-  margin-right: 10px; /* Abstand zwischen den Strichen */
+  margin-right: 8px; /* Abstand zwischen den Strichen */
   font-size: 30px; /* Große Schriftgröße für bessere Sichtbarkeit */
 }
 

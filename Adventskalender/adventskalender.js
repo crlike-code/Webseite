@@ -55,9 +55,16 @@ function openDoor(tuerchen, raetsel) {
   if (!tuerchen.classList.contains('open') && raetsel) {
     tuerchen.classList.add('open');
 
+    // Erstellt Striche für jeden Buchstaben im Lösungswort
+    let wordLengthIndicators = '';
+    for (let i = 0; i < raetsel.loesung.length; i++) {
+      wordLengthIndicators += '<span class="letter-indicator">_</span>';
+    }
+
     // Erstellt das Layout für das Rätsel
     tuerchen.innerHTML = `
       <div class="riddle">${raetsel.frage}</div>
+      <div class="word-length-indicators">${wordLengthIndicators}</div>
       <input type="text" class="loesung-input" placeholder="Deine Antwort...">
       <button class="check-answer">Überprüfen</button>
       <button class="hint-button">Hinweis</button>
@@ -97,7 +104,6 @@ function openDoor(tuerchen, raetsel) {
   }
 }
 
-// Stellen Sie sicher, dass die Funktion checkAnswer und alle relevanten Modals im HTML vorhanden sind
 
 
 
